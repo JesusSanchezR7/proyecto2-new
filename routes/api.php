@@ -29,29 +29,19 @@ Route::get('/empleados/{id}',[EmpleadoController::class,'show']);
 
 Route::delete('/empleados/{id}',[EmpleadoController::class,'delete']);
 
-
-
 // para saber cuantos empleados "masculinos" hay
 //para saber cuantos empleados "femeninos" hay
-Route::get('/generos', [EmpleadoController::class,'generos']);
-
 //total de alumnos becados
 //total de alumnos sin veca
-Route::get('/beca', [EmpleadoController::class,'becas']);
-
-
 //total de alumnos con horario matutino
 //total de alumnos con horario verpertino
-Route::get('/horario', [EmpleadoController::class,'horarios']);
-
-
 //total de alumnos que reprobaron en la prepa (si el alumno saco menos de 6 entonces lo cuentan como reprobado)
 //total de alumnos que aprobaron la prepa (si el alumno saco mas de 6 entonces lo cuentan como aprobado)
-Route::get('/calificacion', [EmpleadoController::class,'reprobados_no_reprobados']);
-
-
 //total de alumnos con problemas de salud
 //total de alumnos sin problemas de salud
-Route::get('/problemas', [EmpleadoController::class,'salud']);
+
+// todo eso es una sola /*/**/***/****/
+Route::get('/empleados', [EmpleadoController::class,'datos_empleados']);
+
 
 

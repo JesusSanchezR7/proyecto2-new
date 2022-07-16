@@ -12,7 +12,8 @@ class EmpleadoController extends Controller
     $empleados = Empleado::all();
     return response([
         'total_data'=>count($empleados),
-        'data'=>$empleados
+        'data'=>$empleados,
+
     ],200);
     }
 
@@ -34,7 +35,7 @@ class EmpleadoController extends Controller
 
         Empleado::create($data);
         return response([
-            'mesage'=> 'Se creo con exito el empleado'
+            'mesage'=> 'Se creo con exito el empleado',
         ],201);
     }
 
@@ -71,63 +72,37 @@ class EmpleadoController extends Controller
         ]);
     }
 
-    public function generos (Request $Request)
-    {
-        $masculino =  Empleados::where("genero","masculino")->count();
-        $femenino =  Empleado::where("genero","femenino")->count();
-        return response([
-            'masculinos'=>$masculino,
-            'femeninos'=>$femenino,
-        ]);
-    }
 
-    public function horarios (Request $Request)
-    {
-        $matu =  Empleado::where("horario","matutino")->count();
-        $vesp =  Empleado::where("horario","vespertino")->count();
+    public function datos_empleados(Request $request){
 
-        return response([
-            'vespertino'=>$vesp,
-            'matutino'=>$matu,
-
-        ]);
-    }
-
-    public function becas (Request $Request)
-    {
-        $nobeca =  Empleado::where("becado","no")->count();
-        $beca =  Empleado::where("becado","si")->count();
-        return response([
-            'si'=>$beca,
-            'no'=>$nobeca,
-        ]);
-    }
-
-    public function salud (Request $Request)
-    {
-        $saludables =  Empleado::where("problemas_de_salud","si")->count();
-        $nosaludables =  Empleado::where("problemas_de_salud","no")->count();
+        $empleados = Empleado::all();
+        $masculinos = Empleado::where('genero', 'masculino')->get();
+        $femenino = Empleado::where('genero', 'femenino')->get();
+        $matu = Empleado::where('horario','matutino')->get();
+        $vesp = Empleado::where('horario','vespertino')->get();
+        $nobeca =  Empleado::where('becado','no')->get();
+        $beca =  Empleado::where('becado','si')->get();
+        $saludables =  Empleado::where('problemas_de_salud','si')->get();
+        $nosaludables =  Empleado::where('problemas_de_salud','no')->get();
+        $reprobado =  Empleado::where('calificacion_prepa', '<=', '6')->get();
+        $aprobado =  Empleado::where('calificacion_prepa','>=', '7')->get();
 
 
         return response([
-            'sin_problemas_de_salud'=>$nosaludables,
-            'problemas_de_salud'=>$saludables,
-        ]);
-    }
-
-    public function reprobados_no_reprobados (Request $Request)
-    {
-
-        $reprobado =  Empleado::where("calificacion_prepa", "<=", "6")->count();
-        $aprobado =  Empleado::where("calificacion_prepa",">=", "7")->count();
-
-        return response([
-            'reprobados' => $reprobado,
-            'aprobados' => $aprobado,
-        ]);
-    }
-
-
+            'mesage'=> 'Examen de cuantos hay en una base de datos 20 registros',
+            'Cuantos empleados hay: '=>count($empleados),
+            'Cuantos Hombres hay: '=>count($masculinos),
+            'Cuantos Mujeres hay: '=>count($femenino),
+            'Cuantos se encuentran el la mañana'=>count($matu),
+            'Cuantos se encuentran el la tarde'=>count($vesp),
+            'Cuantos no tiene Beca :( '=>count($nobeca),
+            'Cuantos tienen Beca   :) '=>count($beca),
+            'Cuantos estan con buena salud' =>count($saludables),
+            'Cuantos No tiene buena salud'=>count($nosaludables),
+            'Cunatos estan reprobados:'=>count($reprobado),
+            'Cuantos esta aprobados:'=>count($aprobado)
+        ],200);
+        }
 
 }
 
